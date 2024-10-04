@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
         });
+
     }
     /**
      * Reverse the migrations.
