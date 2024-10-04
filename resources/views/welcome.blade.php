@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Welkom bij de Scrum-webapplicatie</title>
+        <title>Welkom bij Epic-Sprint</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
