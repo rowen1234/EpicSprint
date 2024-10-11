@@ -16,21 +16,26 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            <!-- Navigation -->
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @if (isset($header))
+            <!-- Page Heading (Optional) -->
+            @if (View::hasSection('header'))  <!-- Check if header is set -->
                 <header class="bg-white dark:bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+                        @yield('header')  <!-- Output header section -->
                     </div>
                 </header>
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                @yield('content')  <!-- Output content section -->
             </main>
         </div>
+
+        <footer class="text-center py-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</p>
+        </footer>
     </body>
 </html>
