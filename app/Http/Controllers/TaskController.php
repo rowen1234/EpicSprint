@@ -12,7 +12,11 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        // Retrieve all tasks along with their related project
+        $tasks = Task::with('project')->get();
+
+        // Pass the tasks to the view
+        return view('task', compact('tasks'));
     }
 
     /**
@@ -20,7 +24,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        // Fetch all projects to display in the select dropdown
+        $projects = \App\Models\Project::all();
+
+        // Return the create task view with the list of projects
+        return view('create_task', compact('projects'));
     }
 
     /**
@@ -28,7 +36,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the request data
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
+            'status' => 'required|in:done,ready,in progress,todo',
+            'deadline' => 'required|date',
+        ]);
+
+        // Create a new task
+        Task::create($validated);
+
+        // Redirect back to the tasks list
+        return redirect()->route('task.index')->with('success', 'Task created successfully!');
     }
 
     /**
@@ -42,24 +63,45 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(task $task)
+    public function edit(Task $task)
     {
-        //
+        // Fetch all projects to display in the select dropdown
+        $projects = \App\Models\Project::all();
+
+        // Return the edit task view with the task and the list of projects
+        return view('edit_task', compact('task', 'projects'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, task $task)
+    public function update(Request $request, Task $task)
     {
-        //
+        // Validate the request data
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
+            'status' => 'required|in:done,ready,in progress,todo',
+            'deadline' => 'required|date',
+        ]);
+
+        // Update the task with validated data
+        $task->update($validated);
+
+        // Redirect back to the tasks list
+        return redirect()->route('task.index')->with('success', 'Task updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(task $task)
+    public function destroy(Task $task)
     {
-        //
+        // Delete the task
+        $task->delete();
+
+        // Redirect back to the tasks list with a success message
+        return redirect()->route('task.index')->with('success', 'Task deleted successfully!');
     }
 }
