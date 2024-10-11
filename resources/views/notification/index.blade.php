@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="row">
-            <table class="table table-bordered">
+            <table class="table-primary">
                 <thead>
                     <tr>
                         <th>Project Id</th>
