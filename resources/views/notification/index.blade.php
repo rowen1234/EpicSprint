@@ -19,13 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($Notifications as $Notification)
+                    @foreach ($notifications as $notification)
                         <tr>
-                            <td>{{ $Notification->project_id }}</td>
-                            <td>{{ $Notification->issue_id }}</td>
-                            <td>{{ $Notification->status }}</td>
+                            <td>{{ $notification->project_id }}</td>
+                            <td>{{ $notification->issue_id }}</td>
+                            <td>{{ $notification->status }}</td>
                             <td>
-                                <form action="{{ route('notifications.destroy', $Notification->id) }}" method="Post">
+                                <form action="{{ route('notifications.destroy', $notification->id) }}" method="Post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>

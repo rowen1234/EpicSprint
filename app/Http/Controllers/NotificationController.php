@@ -14,7 +14,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::where('user_id', Auth::user()->id)->get();
+        $notifications = Notification::where('user_id', Auth::user()->get()->value('id'))->get();
 
         return view('notification.index', compact('notifications'));
     }
@@ -70,7 +70,7 @@ class NotificationController extends Controller
     public function destroy(notification $notification)
     {
         $notification->delete();
-        
+
         return redirect()->route('notifications.index');
     }
 }
