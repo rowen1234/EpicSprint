@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +31,14 @@ Route::middleware('auth')->group(function () {
 });
 
 route::resource('notifications', NotificationController::class);
+
+// Route for task view
+Route::get('/task', [TaskController::class, 'index' ])->name('task.index');
+Route::post('/tasks', [TaskController::class, 'store'])->name('task.store');
+Route::get('/create_task', [TaskController::class, 'create'])->name('task.create');
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('task.update');
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
+
 
 require __DIR__.'/auth.php';
