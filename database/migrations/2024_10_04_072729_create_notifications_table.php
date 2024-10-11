@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('task_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['unread', 'read'])->default('unread');
+            $table->enum('task_status', ['done', 'ready', 'in progress', 'todo'])->default('todo');
             $table->tinyInteger('deleted')->default(0);
             $table->dateTime('completed_at')->nullable();
             $table->dateTime('deadline')->nullable();
