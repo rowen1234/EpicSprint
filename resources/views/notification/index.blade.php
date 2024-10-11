@@ -9,9 +9,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <table class="table-primary">
-                <thead>
+        <div>
+            <table class="table">
+                <thead class="table-primary">
                     <tr>
                         <th>Project Id</th>
                         <th>Issue No.</th>
