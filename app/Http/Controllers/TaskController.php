@@ -10,13 +10,34 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Retrieve all tasks along with their related project
-        $tasks = Task::with('project')->get();
+        // Fetch the list of all projects for the filter dropdown
+        $projects = \App\Models\Project::all();
 
-        // Pass the tasks to the view
-        return view('task', compact('tasks'));
+        // Query the tasks
+        $query = task::query();
+
+        // Apply search filter (by name)
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Apply project filter
+        if ($request->filled('project_id')) {
+            $query->where('project_id', $request->project_id);
+        }
+
+        // Apply status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Get the filtered tasks with pagination
+        $tasks = $query->with('project')->paginate(10);
+
+        // Return the view with tasks and projects
+        return view('task', compact('tasks', 'projects'));
     }
 
     /**
