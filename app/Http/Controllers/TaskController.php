@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -66,9 +67,18 @@ class TaskController extends Controller
             'deadline' => 'required|date',
         ]);
 
+        $task = new Task;
+        $task->name = $request->name;
+        $task->description = $request->description;
+        $task->project_id = $request->project_id;
+        $task->status = $request->status;
+        $task->deadline = $request->deadline;
+        $task->user_id = Auth::user()->get()->value('id');
+        $task->save();
         // Create a new task
-        Task::create($validated);
+        //Task::create($validated);
 
+        route('notifications.store', $task);
         // Redirect back to the tasks list
         return redirect()->route('task.index')->with('success', 'Task created successfully!');
     }
@@ -110,6 +120,7 @@ class TaskController extends Controller
         // Update the task with validated data
         $task->update($validated);
 
+        route('notifications.store', $task);
         // Redirect back to the tasks list
         return redirect()->route('task.index')->with('success', 'Task updated successfully!');
     }
