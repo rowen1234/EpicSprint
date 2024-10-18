@@ -28,6 +28,11 @@
                             <td>{{ $notification->status }}</td>
                             <td>{{ $notification->created_at }}</td>
                             <td>{{ $notification->deadline }}</td>
+                            @if (($notification->deadline <= date('Y-m-d')) && ($notification->status <> 'done'))
+                                <td>
+                                    <p>Deadline is verstreken!</p>
+                                </td>
+                            @endif
                             <td>
                                 <form action="{{ route('notifications.destroy', $notification->id) }}" method="Post">
                                     @csrf
