@@ -38,6 +38,12 @@ class NotificationController extends Controller
         $notification->project_id -> $task->project_id;
         $notification->task_status -> $task->status;
         $notification->user_id -> task->user_id;
+
+        $deadline = new \DateTime();
+        $deadline->modify('+2 weeks');
+        $notification->deadline = $deadline->format('Y-m-d');
+
+        $notification->save();
     }
 
     /**
