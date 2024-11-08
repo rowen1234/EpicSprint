@@ -12,7 +12,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        $projects = Project::all();
+
+        return view('project.index', compact('projects'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('project/create');
     }
 
     /**
@@ -28,7 +30,17 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate(
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'deadline' => 'required'
+            ]);
+
+            Project::create($validated);
+
+        return redirect()->route('projects.index');
     }
 
     /**

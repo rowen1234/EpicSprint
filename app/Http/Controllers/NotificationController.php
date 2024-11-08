@@ -34,7 +34,7 @@ class NotificationController extends Controller
     {
         $notification = new notification;
 
-        $notification->task_id -> $task->id;
+        $notification->task_id -> $task->value('id');
         $notification->project_id -> $task->project_id;
         $notification->task_status -> $task->status;
         $notification->user_id -> task->user_id;
