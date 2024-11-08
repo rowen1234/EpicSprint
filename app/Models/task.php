@@ -13,7 +13,8 @@ class task extends Model
     protected $table = 'tasks';
 
     // Mass assignable attributes
-    protected $fillable = ['name', 'description', 'project', 'project_naam', 'status', 'deadline', 'completed_at', 'deleted', 'created_at', 'updated_at'];
+    // protected $fillable = ['name', 'description', 'project', 'project_naam', 'status', 'deadline', 'completed_at', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'description', 'project_id', 'status', 'priority', 'deadline'];
 
     // Define the relationship: each task belongs to one project
     public function project()
