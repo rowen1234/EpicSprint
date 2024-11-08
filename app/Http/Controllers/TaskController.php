@@ -33,11 +33,16 @@ class TaskController extends Controller
             $query->where('status', $request->status);
         }
 
+        // Apply priority filter
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
         // Get the filtered tasks with pagination
         $tasks = $query->with('project')->paginate(10);
 
         // Return the view with tasks and projects
-        return view('task', compact('tasks', 'projects'));
+        return view('task/task', compact('tasks', 'projects'));
     }
 
     /**
@@ -49,7 +54,7 @@ class TaskController extends Controller
         $projects = \App\Models\Project::all();
 
         // Return the create task view with the list of projects
-        return view('create_task', compact('projects'));
+        return view('task/create_task', compact('projects'));
     }
 
     /**
@@ -61,8 +66,9 @@ class TaskController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
-            'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
+            'project_id' => 'required|exists:projects,id',
             'status' => 'required|in:done,ready,in progress,todo',
+            'priority' => 'required|in:low,medium,high',
             'deadline' => 'required|date',
         ]);
 
@@ -90,7 +96,7 @@ class TaskController extends Controller
         $projects = \App\Models\Project::all();
 
         // Return the edit task view with the task and the list of projects
-        return view('edit_task', compact('task', 'projects'));
+        return view('task/edit_task', compact('task', 'projects'));
     }
 
     /**
@@ -104,6 +110,7 @@ class TaskController extends Controller
             'description' => 'required',
             'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
             'status' => 'required|in:done,ready,in progress,todo',
+            'priority' => 'required|in:low,medium,high',
             'deadline' => 'required|date',
         ]);
 

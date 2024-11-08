@@ -48,10 +48,20 @@
                 </select>
             </div>
 
+            <!-- Priority -->
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select class="form-control" id="priority" name="priority" required>
+                    <option value="low" {{ $task->priority == 'low' ? 'selected' : '' }}>Low</option>
+                    <option value="medium" {{ $task->priority == 'medium' ? 'selected' : '' }}>Medium</option>
+                    <option value="high" {{ $task->priority == 'high' ? 'selected' : '' }}>High</option>
+                </select>
+            </div>
+
             <!-- Deadline -->
             <div class="form-group">
                 <label for="deadline">Deadline</label>
-                <input type="date" class="form-control" id="deadline" name="deadline" value="{{ $task->deadline }}" required>
+                <input type="date" class="form-control" id="deadline" name="deadline" value="{{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : '' }}" required>
             </div>
 
             <!-- Submit button -->

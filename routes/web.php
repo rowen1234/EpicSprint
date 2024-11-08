@@ -30,12 +30,12 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route for task view
-Route::get('/task', [TaskController::class, 'index' ])->name('task.index');
-Route::post('/tasks', [TaskController::class, 'store'])->name('task.store');
-Route::get('/create_task', [TaskController::class, 'create'])->name('task.create');
-Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
-Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('task.update');
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
+Route::get('task/task', [TaskController::class, 'index' ])->name('task.index');
+Route::post('task/tasks', [TaskController::class, 'store'])->name('task.store');
+Route::get('task/create_task', [TaskController::class, 'create'])->name('task.create');
+Route::get('task/tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
+Route::put('task/tasks/{task}', [TaskController::class, 'update'])->name('task.update');
+Route::delete('task/tasks/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
 
 
 require __DIR__.'/auth.php';
