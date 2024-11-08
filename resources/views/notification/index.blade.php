@@ -16,18 +16,21 @@
                         <th>Project Id</th>
                         <th>Task No.</th>
                         <th>Status</th>
+                        <th>Task status</th>
                         <th>Gemaakt op</th>
-                        <th>Deadline</th>
+                        <th>Deadline</th>`
+                        <th>Actie</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($notifications as $notification)
                         <tr>
                             <td>{{ $notification->project_id }}</td>
-                            <td>{{ $notification->issue_id }}</td>
+                            <td>{{ $notification->task_id }}</td>
                             <td>{{ $notification->status }}</td>
+                            <td>{{ $notification->task_status }}</td>
                             <td>{{ $notification->created_at }}</td>
-                            <td>{{ $notification->deadline }}</td>
+                            <td>{{ \Carbon\Carbon::parse($notification->deadline)->format('Y-d-m') }}</td>
                             @if (($notification->deadline <= date('Y-m-d')) && ($notification->status <> 'done'))
                                 <td>
                                     <p>Deadline is verstreken!</p>

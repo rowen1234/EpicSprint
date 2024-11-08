@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 });
 
 route::resource('notifications', NotificationController::class);
+route::get('notifications/store/{task}', [NotificationController::class, 'store'])->name('notifications.store');
 
 // Route for task view
 Route::get('task/task', [TaskController::class, 'index' ])->name('task.index');

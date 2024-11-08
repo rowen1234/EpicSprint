@@ -14,7 +14,9 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::where('user_id', Auth::user()->get()->value('id'))->get();
+        $notifications = Notification::where('user_id', Auth::id())
+                                     ->orderBy('created_at', 'desc')
+                                     ->get();
 
         return view('notification.index', compact('notifications'));
     }
@@ -34,16 +36,19 @@ class NotificationController extends Controller
     {
         $notification = new notification;
 
-        $notification->task_id -> $task->id;
-        $notification->project_id -> $task->project_id;
-        $notification->task_status -> $task->status;
-        $notification->user_id -> task->user_id;
+        // dd($task);
+        $notification->task_id = $task->id;
+        $notification->project_id = $task->project_id;
+        $notification->task_status = $task->status;
+        $notification->user_id = $task->user_id;
 
         $deadline = new \DateTime();
         $deadline->modify('+2 weeks');
         $notification->deadline = $deadline->format('Y-m-d');
 
         $notification->save();
+
+        return redirect()->route('task.index');
     }
 
     /**

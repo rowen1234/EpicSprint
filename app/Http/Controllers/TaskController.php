@@ -84,9 +84,9 @@ class TaskController extends Controller
         // Create a new task
         //Task::create($validated);
 
-        route('notifications.store', $task);
+
         // Redirect back to the tasks list
-        return redirect()->route('task.index')->with('success', 'Task created successfully!');
+        return redirect()->route('notifications.store', $task)->with('success', 'Task created successfully!');
     }
 
     /**
@@ -127,9 +127,9 @@ class TaskController extends Controller
         // Update the task with validated data
         $task->update($validated);
 
-        route('notifications.store', $task);
+
         // Redirect back to the tasks list
-        return redirect()->route('task.index')->with('success', 'Task updated successfully!');
+        return redirect()->route('notifications.store', $task)->with('success', 'Task updated successfully!');
     }
 
     /**

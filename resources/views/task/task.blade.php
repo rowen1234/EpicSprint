@@ -91,7 +91,7 @@
                     <td>{{ $task->name }}</td>
                     <td>{{ $task->description }}</td>
                     <td>{{ $task->project ? $task->project->name : 'No Project' }}</td>
-                    <td>{{ $task->status }}</td>
+                    <td><p id="status">{{ $task->status }}</p></td>
                     <td>{{ $task->priority }}</td>
                     <!-- Carbon is an api extension for date time formatting. -->
                     <td>{{ \Carbon\Carbon::parse($task->deadline)->format('Y-d-m') }}</td>
@@ -119,6 +119,25 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Script that changes the color of the status, every status has it's own color. -->
+    <script>
+        document.querySelectorAll('#status').forEach(p => {
+            p.style.padding = '2px';
+            p.style.borderRadius = '25px';
+            p.style.color = 'white';
+            p.style.textAlign = 'center';
+            if (p.innerText.trim() === 'todo') {
+                p.style.backgroundColor = '#dc3545';
+            } else if (p.innerText.trim() === 'in progress') {
+                p.style.backgroundColor = '#dc9535';
+            } else if (p.innerText.trim() === 'ready') {
+                p.style.backgroundColor = '#007bff';
+            } else if (p.innerText.trim() === 'done') {
+                p.style.backgroundColor = '#35dc67';
+            }
+        });
+    </script>
 </body>
 
 </html>
