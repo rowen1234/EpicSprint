@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -33,11 +34,16 @@ class TaskController extends Controller
             $query->where('status', $request->status);
         }
 
+        // Apply priority filter
+        if ($request->filled('priority')) {
+            $query->where('priority', $request->priority);
+        }
+
         // Get the filtered tasks with pagination
         $tasks = $query->with('project')->paginate(10);
 
         // Return the view with tasks and projects
-        return view('task', compact('tasks', 'projects'));
+        return view('task/task', compact('tasks', 'projects'));
     }
 
     /**
@@ -49,7 +55,7 @@ class TaskController extends Controller
         $projects = \App\Models\Project::all();
 
         // Return the create task view with the list of projects
-        return view('create_task', compact('projects'));
+        return view('task/create_task', compact('projects'));
     }
 
     /**
@@ -61,16 +67,26 @@ class TaskController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
-            'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
+            'project_id' => 'required|exists:projects,id',
             'status' => 'required|in:done,ready,in progress,todo',
+            'priority' => 'required|in:low,medium,high',
             'deadline' => 'required|date',
         ]);
 
+        $task = new Task;
+        $task->name = $request->name;
+        $task->description = $request->description;
+        $task->project_id = $request->project_id;
+        $task->status = $request->status;
+        $task->deadline = $request->deadline;
+        $task->user_id = Auth::user()->get()->value('id');
+        $task->save();
         // Create a new task
-        Task::create($validated);
+        //Task::create($validated);
+
 
         // Redirect back to the tasks list
-        return redirect()->route('task.index')->with('success', 'Task created successfully!');
+        return redirect()->route('notifications.store', $task)->with('success', 'Task created successfully!');
     }
 
     /**
@@ -90,7 +106,7 @@ class TaskController extends Controller
         $projects = \App\Models\Project::all();
 
         // Return the edit task view with the task and the list of projects
-        return view('edit_task', compact('task', 'projects'));
+        return view('task/edit_task', compact('task', 'projects'));
     }
 
     /**
@@ -104,14 +120,16 @@ class TaskController extends Controller
             'description' => 'required',
             'project_id' => 'required|exists:projects,id', // Ensure the project_id exists in the projects table
             'status' => 'required|in:done,ready,in progress,todo',
+            'priority' => 'required|in:low,medium,high',
             'deadline' => 'required|date',
         ]);
 
         // Update the task with validated data
         $task->update($validated);
 
+
         // Redirect back to the tasks list
-        return redirect()->route('task.index')->with('success', 'Task updated successfully!');
+        return redirect()->route('notifications.store', $task)->with('success', 'Task updated successfully!');
     }
 
     /**

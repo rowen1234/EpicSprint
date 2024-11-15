@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\notification;
+use App\Models\task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -12,7 +14,11 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = Notification::where('user_id', Auth::id())
+                                     ->orderBy('created_at', 'desc')
+                                     ->get();
+
+        return view('notification.index', compact('notifications'));
     }
 
     /**
@@ -20,15 +26,29 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(task $task)
     {
-        //
+        $notification = new notification;
+
+        // dd($task);
+        $notification->task_id = $task->id;
+        $notification->project_id = $task->project_id;
+        $notification->task_status = $task->status;
+        $notification->user_id = $task->user_id;
+
+        $deadline = new \DateTime();
+        $deadline->modify('+2 weeks');
+        $notification->deadline = $deadline->format('Y-m-d');
+
+        $notification->save();
+
+        return redirect()->route('task.index');
     }
 
     /**
@@ -36,7 +56,7 @@ class NotificationController extends Controller
      */
     public function show(notification $notification)
     {
-        //
+
     }
 
     /**
@@ -60,6 +80,8 @@ class NotificationController extends Controller
      */
     public function destroy(notification $notification)
     {
-        //
+        $notification->delete();
+
+        return redirect()->route('notifications.index');
     }
 }

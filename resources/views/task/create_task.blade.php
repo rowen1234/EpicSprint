@@ -47,6 +47,16 @@
                 </select>
             </div>
 
+            <!-- Priority -->
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select class="form-control" id="priority" name="priority" required>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
             <!-- Deadline -->
             <div class="form-group">
                 <label for="deadline">Deadline</label>

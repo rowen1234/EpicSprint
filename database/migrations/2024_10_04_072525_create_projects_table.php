@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->tinyInteger('deleted')->default(0);
             $table->dateTime('completed_at')->nullable();
-            $table->dateTime('deadline')->nullable();
+            $table->date('deadline')->nullable();
             $table->timestamps();
         });
     }
