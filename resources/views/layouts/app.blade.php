@@ -17,7 +17,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="/resource/css/navigation" rel="stylesheet" <!-- Scripts -->
+    <link href="{{ asset('css/navigation.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/td.css') }}" rel="stylesheet" type="text/css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

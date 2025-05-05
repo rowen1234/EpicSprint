@@ -59,6 +59,7 @@
                     <th>Status</th>
                     <th>Deadline</th>
                     <th>creator</th>
+                    <th>image</th>
                     <th style="text-align: center;">Actions</th>
                 </tr>
             </thead>
@@ -72,7 +73,7 @@
                         <td>{{ $task->status }}</td>
                         <td>{{ $task->deadline }}</td>
                         <td>{{ $task->user ? $task->user->name : 'No User' }}</td>
-                        <td>
+                        <td class="cropimg">
                             @if ($task->task_image !== null)
                                 <img src="{{ asset('uploads/tasks/' . $task->task_image) }}" alt="">
                             @endif
