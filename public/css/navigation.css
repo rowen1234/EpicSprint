@@ -1,7 +1,6 @@
 .seperate{
-    display: flexbox;
+    display: flex;
     justify-content: space-evenly;
     width: 200px;
-    background-color: black;
 }
 
