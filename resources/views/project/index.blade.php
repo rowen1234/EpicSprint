@@ -37,6 +37,10 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
+                                <form action="{{ route('task.index') }}" method="Get">
+                                    <button type="submit" class="btn">go</button>
+                                    <input type="text" name="project_id" value="{{$project->id}}" hidden>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
