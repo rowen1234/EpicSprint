@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,12 +75,22 @@ class TaskController extends Controller
         $task->status = $request->status;
         $task->deadline = $request->deadline;
         $task->user_id = Auth::user()->get()->value('id');
+        if ($request->hasFile('task_image'))
+        {
+            $file = $request->file('task_image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $file->move('uploads/tasks/', $filename);
+            $task->task_image = $filename;
+        }
+
         $task->save();
         // Create a new task
         //Task::create($validated);
 
         route('notifications.store', $task);
         // Redirect back to the tasks list
+
         return redirect()->route('task.index')->with('success', 'Task created successfully!');
     }
 

@@ -13,11 +13,15 @@ class task extends Model
     protected $table = 'tasks';
 
     // Mass assignable attributes
-    protected $fillable = ['name', 'description', 'project', 'project_naam', 'status', 'deadline', 'completed_at', 'deleted', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'description', 'project', 'project_naam', 'status', 'deadline', 'completed_at', 'user_id', 'task_image',  'deleted', 'created_at', 'updated_at'];
 
     // Define the relationship: each task belongs to one project
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class, 'project_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

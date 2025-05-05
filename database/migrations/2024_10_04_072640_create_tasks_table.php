@@ -20,6 +20,8 @@ return new class extends Migration
             $table->dateTime('deadline')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->tinyInteger('deleted')->default(0);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('task_image')->nullable();
             $table->timestamps();
         });
 

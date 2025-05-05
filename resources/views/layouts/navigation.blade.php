@@ -36,7 +36,10 @@
                                 {{ __('Profile') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('projects.index')">
-                                {{ 'projects' }}
+                                {{ 'proje   cts' }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('task.index')">
+                                {{ 'tasks' }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('notifications.index')">
                                 {{ 'Notificaties' }}
@@ -54,8 +57,12 @@
                         </x-slot>
                     </x-dropdown>
                 @else
-                    <a href="{{ route('login') }}"
-                        class="text-sm text-gray-700 dark:text-gray-300">{{ __('Login') }}</a>
+                    <div class="seperate">
+                        <a href="{{ route('login') }}"
+                            class="text-sm text-gray-700 dark:text-gray-300">{{ __('Login') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300">{{ __('register') }}</a>
+                    </div>
                 @endif
             </div>
 
@@ -109,8 +116,10 @@
                     </form>
                 </div>
             @else
-                <a href="{{ route('login') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300">{{ __('Login') }}</a>
+                <div>
+                    <a href="{{ route('login') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300">{{ __('Login') }}</a>
+                </div>
             @endif
         </div>
     </div>

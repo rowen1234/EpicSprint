@@ -11,7 +11,7 @@
         <h1>Create a New Task</h1>
 
         <!-- Form to create a new task -->
-        <form action="{{ route('task.store') }}" method="POST">
+        <form action="{{ route('task.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <!-- Task Name -->
@@ -51,6 +51,11 @@
             <div class="form-group">
                 <label for="deadline">Deadline</label>
                 <input type="date" class="form-control" id="deadline" name="deadline" required>
+            </div>
+
+            <div class="form-group">
+                <Label for="task_image">task image</Label>
+                <input type="file" name="task_image" class="form-control">
             </div>
 
             <!-- Submit button -->
